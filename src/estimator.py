@@ -15,16 +15,21 @@ def estimator(data):
 
   infections_time = infectionsByRequestedTime(currently_infected, period_type, duration)
   severe_infections_time = infectionsByRequestedTime(severe_currently_infected, period_type, duration)
+
   case_by_time = severeCasesByRequestedTime(infections_time)
   severe_case_by_time = severeCasesByRequestedTime(severe_infections_time)
+
   hosp_beds_by_reqtime = hospitalBedsByRequestedTime(total_hospital_beds, case_by_time)
   severe_hosp_beds_by_reqtime = hospitalBedsByRequestedTime(total_hospital_beds, severe_case_by_time)
+
   icu_by_reqtime = casesForICUByRequestedTime(infections_time)
   severe_icu_by_reqtime = casesForICUByRequestedTime(severe_infections_time)
+
   ventilators_by_reqtime = casesForVentilatorsByRequestedTime(infections_time)
   severe_ventilators_by_reqtime = casesForVentilatorsByRequestedTime(severe_infections_time)
-  dollars_in_flight = dollarsInFlightDaily(infections_time, avg_daily_income, period_type, duration)
-  dollars_in_flight_severe = dollarsInFlightDaily(severe_infections_time, avg_daily_income, period_type, duration)
+
+  dollars_in_flight = dollarsInFlight(infections_time, avg_daily_income, period_type, duration)
+  dollars_in_flight_severe = dollarsInFlight(severe_infections_time, avg_daily_income, period_type, duration)
 
 
   impact["currentlyInfected"] = currently_infected
@@ -73,7 +78,7 @@ def dayNormalizer(period_type, duration):
   elif (period_type == "months"):
     days = int(duration) * 30
   else:
-    days = duration
+    days
 
   return int(days)
 
@@ -105,7 +110,7 @@ def casesForVentilatorsByRequestedTime(infections_by_time):
   return (0.02 * infections_by_time)
 
 
-def dollarsInFlightDaily(infections_by_time, avg_daily_income, period_type, duration):
+def dollarsInFlight(infections_by_time, avg_daily_income, period_type, duration):
   days = dayNormalizer(period_type, duration)
   return math.trunc((infections_by_time * 0.65 * avg_daily_income) / days)
 
