@@ -29,18 +29,18 @@ def estimator(data):
 
   impact["currentlyInfected"] = currently_infected
   impact["infectionsByRequestedTime"] = infections_time
-  impact["severeCasesByRequestedTime"] = case_by_time
+  impact["severeCasesByRequestedTime"] = math.trunc(case_by_time)
   impact["hospitalBedsByRequestedTime"] = hosp_beds_by_reqtime
-  impact["casesForICUByRequestedTime"] = icu_by_reqtime
-  impact["casesForVentilatorsByRequestedTime"] = severe_icu_by_reqtime
+  impact["casesForICUByRequestedTime"] = math.trunc(icu_by_reqtime)
+  impact["casesForVentilatorsByRequestedTime"] = math.trunc(ventilators_by_reqtime)
   impact["dollarsInFlight"] = dollars_in_flight
 
   severeImpact["currentlyInfected"] = severe_currently_infected
   severeImpact["infectionsByRequestedTime"] = severe_infections_time
-  severeImpact["severeCasesByRequestedTime"] = severe_case_by_time
+  severeImpact["severeCasesByRequestedTime"] = math.trunc(severe_case_by_time)
   severeImpact["hospitalBedsByRequestedTime"] = severe_hosp_beds_by_reqtime
-  severeImpact["casesForICUByRequestedTime"] = ventilators_by_reqtime
-  severeImpact["casesForVentilatorsByRequestedTime"] = severe_ventilators_by_reqtime
+  severeImpact["casesForICUByRequestedTime"] = math.trunc(severe_icu_by_reqtime)
+  severeImpact["casesForVentilatorsByRequestedTime"] = math.trunc(severe_ventilators_by_reqtime)
   severeImpact["dollarsInFlight"] = dollars_in_flight_severe
 
   output_data["data"] = data
