@@ -1,3 +1,4 @@
+import math
 def estimator(data):
   output_data = {}
   impact = {}
@@ -36,7 +37,8 @@ def covid19SevereImpactEstimator(reported_cases):
 
 
 def daysFactor(days):
-  return (days % 3)
+  # return (days % 3)
+  return math.trunc(days/3)
 
 
 def dayNormalizer(period_type, duration):
@@ -48,7 +50,7 @@ def dayNormalizer(period_type, duration):
   elif (period_type == "months"):
     days = int(duration) * 30
   else:
-    days
+    days = duration
 
   return int(days)
 
