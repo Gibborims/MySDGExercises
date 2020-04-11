@@ -111,8 +111,8 @@ def casesForVentilatorsByRequestedTime(infections_by_time):
 
 
 def dollarsInFlight(infections_by_time, avg_daily_income, period_type, duration):
-  days = dayNormalizer(period_type, duration)
-  return math.trunc((infections_by_time * 0.65 * avg_daily_income) / days)
+  # days = dayNormalizer(period_type, duration)
+  return math.trunc((infections_by_time * 0.65 * avg_daily_income) / 30)
 
 
 # data = {
