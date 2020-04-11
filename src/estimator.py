@@ -11,6 +11,7 @@ def estimator(data):
   period_type = data["periodType"]
   duration = data["timeToElapse"]
   total_hospital_beds = data["totalHospitalBeds"]
+  avg_daily_income = data["region"]["avgDailyIncomeInUSD"]
 
   infections_time = infectionsByRequestedTime(currently_infected, period_type, duration)
   severe_infections_time = infectionsByRequestedTime(severe_currently_infected, period_type, duration)
@@ -18,16 +19,29 @@ def estimator(data):
   severe_case_by_time = severeCasesByRequestedTime(severe_infections_time)
   hosp_beds_by_reqtime = hospitalBedsByRequestedTime(total_hospital_beds, case_by_time)
   severe_hosp_beds_by_reqtime = hospitalBedsByRequestedTime(total_hospital_beds, severe_case_by_time)
+  icu_by_reqtime = casesForICUByRequestedTime(infections_time)
+  severe_icu_by_reqtime = casesForICUByRequestedTime(severe_infections_time)
+  ventilators_by_reqtime = casesForVentilatorsByRequestedTime(infections_time)
+  severe_ventilators_by_reqtime = casesForVentilatorsByRequestedTime(severe_infections_time)
+  dollars_in_flight = dollarsInFlightDaily(infections_time, avg_daily_income, period_type, duration)
+  dollars_in_flight_severe = dollarsInFlightDaily(infections_time, avg_daily_income, period_type, duration)
+
 
   impact["currentlyInfected"] = currently_infected
   impact["infectionsByRequestedTime"] = infections_time
   impact["severeCasesByRequestedTime"] = case_by_time
   impact["hospitalBedsByRequestedTime"] = hosp_beds_by_reqtime
+  impact["casesForICUByRequestedTime"] = icu_by_reqtime
+  impact["casesForVentilatorsByRequestedTime"] = severe_icu_by_reqtime
+  impact["dollarsInFlight"] = dollars_in_flight
 
   severeImpact["currentlyInfected"] = severe_currently_infected
   severeImpact["infectionsByRequestedTime"] = severe_infections_time
   severeImpact["severeCasesByRequestedTime"] = severe_case_by_time
   severeImpact["hospitalBedsByRequestedTime"] = severe_hosp_beds_by_reqtime
+  severeImpact["casesForICUByRequestedTime"] = ventilators_by_reqtime
+  severeImpact["casesForVentilatorsByRequestedTime"] = severe_ventilators_by_reqtime
+  severeImpact["dollarsInFlight"] = dollars_in_flight_severe
 
   output_data["data"] = data
   output_data["impact"] = impact
@@ -82,6 +96,18 @@ def hospitalBedsByRequestedTime(total_hospital_beds, severe_case_by_time):
   req_available_beds = required_available_beds(total_hospital_beds)
   return math.trunc(req_available_beds - severe_case_by_time)
 
+
+def casesForICUByRequestedTime(infections_by_time):
+  return (0.05 * infections_by_time)
+
+
+def casesForVentilatorsByRequestedTime(infections_by_time):
+  return (0.02 * infections_by_time)
+
+
+def dollarsInFlightDaily(infections_by_time, avg_daily_income, period_type, duration):
+  days = dayNormalizer(period_type, duration)
+  return math.trunc((infections_by_time * 0.65 * avg_daily_income) / days)
 
 
 # data = {
