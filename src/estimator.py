@@ -73,4 +73,4 @@ data = {
   "totalHospitalBeds": 1380614
 }
 
-estimator(data)
+# estimator(data)
