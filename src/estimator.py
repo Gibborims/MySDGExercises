@@ -33,8 +33,8 @@ def estimator(data):
   output_data["impact"] = impact
   output_data["severeImpact"] = severeImpact
 
-  # print(output_data)
-  return output_data
+  print(output_data)
+  # return output_data
 
 
 def covid19ImpactEstimator(reported_cases):
@@ -71,31 +71,31 @@ def infectionsByRequestedTime(currently_infected, period_type, duration):
 
 
 def severeCasesByRequestedTime(infections_by_time):
-  return math.trunc(0.15 * infections_by_time)
+  return (0.15 * infections_by_time)
 
 
 def required_available_beds(total_hospital_beds):
-  return math.trunc(0.35 * total_hospital_beds)
+  return (0.35 * total_hospital_beds)
 
 
 def hospitalBedsByRequestedTime(total_hospital_beds, severe_case_by_time):
   req_available_beds = required_available_beds(total_hospital_beds)
-  return (req_available_beds - severe_case_by_time)
+  return math.trunc(req_available_beds - severe_case_by_time)
 
 
 
-# data = {
-#   "region": {
-#     "name": "Africa",
-#     "avgAge": 19.7,
-#     "avgDailyIncomeInUSD": 5,
-#     "avgDailyIncomePopulation": 0.71
-#   },
-#   "periodType": "days",
-#   "timeToElapse": 58,
-#   "reportedCases": 674,
-#   "population": 66622705,
-#   "totalHospitalBeds": 1380614
-# }
+data = {
+  "region": {
+    "name": "Africa",
+    "avgAge": 19.7,
+    "avgDailyIncomeInUSD": 5,
+    "avgDailyIncomePopulation": 0.71
+  },
+  "periodType": "days",
+  "timeToElapse": 58,
+  "reportedCases": 674,
+  "population": 66622705,
+  "totalHospitalBeds": 1380614
+}
 
-# estimator(data)
+estimator(data)
