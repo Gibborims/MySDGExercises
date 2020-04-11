@@ -24,7 +24,7 @@ def estimator(data):
   ventilators_by_reqtime = casesForVentilatorsByRequestedTime(infections_time)
   severe_ventilators_by_reqtime = casesForVentilatorsByRequestedTime(severe_infections_time)
   dollars_in_flight = dollarsInFlightDaily(infections_time, avg_daily_income, period_type, duration)
-  dollars_in_flight_severe = dollarsInFlightDaily(infections_time, avg_daily_income, period_type, duration)
+  dollars_in_flight_severe = dollarsInFlightDaily(severe_infections_time, avg_daily_income, period_type, duration)
 
 
   impact["currentlyInfected"] = currently_infected
