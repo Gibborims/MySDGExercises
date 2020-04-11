@@ -12,6 +12,7 @@ def estimator(data):
   duration = data["timeToElapse"]
   total_hospital_beds = data["totalHospitalBeds"]
   avg_daily_income = data["region"]["avgDailyIncomeInUSD"]
+  avg_daily_income_populase = data["region"]["avgDailyIncomePopulation"]
 
   infections_time = infectionsByRequestedTime(currently_infected, period_type, duration)
   severe_infections_time = infectionsByRequestedTime(severe_currently_infected, period_type, duration)
@@ -28,8 +29,8 @@ def estimator(data):
   ventilators_by_reqtime = casesForVentilatorsByRequestedTime(infections_time)
   severe_ventilators_by_reqtime = casesForVentilatorsByRequestedTime(severe_infections_time)
 
-  dollars_in_flight = dollarsInFlight(infections_time, avg_daily_income, period_type, duration)
-  dollars_in_flight_severe = dollarsInFlight(severe_infections_time, avg_daily_income, period_type, duration)
+  dollars_in_flight = dollarsInFlight(infections_time, avg_daily_income_populase, avg_daily_income, period_type, duration)
+  dollars_in_flight_severe = dollarsInFlight(severe_infections_time, avg_daily_income_populase, avg_daily_income, period_type, duration)
 
 
   impact["currentlyInfected"] = currently_infected
@@ -52,8 +53,9 @@ def estimator(data):
   output_data["impact"] = impact
   output_data["severeImpact"] = severeImpact
 
-  # print(output_data)
-  return output_data
+
+  print(output_data)
+  # return output_data
 
 
 def covid19ImpactEstimator(reported_cases):
@@ -110,9 +112,9 @@ def casesForVentilatorsByRequestedTime(infections_by_time):
   return (0.02 * infections_by_time)
 
 
-def dollarsInFlight(infections_by_time, avg_daily_income, period_type, duration):
-  # days = dayNormalizer(period_type, duration)
-  return math.trunc((infections_by_time * 0.65 * avg_daily_income) / 30)
+def dollarsInFlight(infections_by_time, avg_daily_income_populase, avg_daily_income, period_type, duration):
+  days = dayNormalizer(period_type, duration)
+  return math.trunc((infections_by_time * avg_daily_income_populase * avg_daily_income) / days)
 
 
 # data = {
@@ -129,4 +131,18 @@ def dollarsInFlight(infections_by_time, avg_daily_income, period_type, duration)
 #   "totalHospitalBeds": 1380614
 # }
 
-# estimator(data)
+data = {
+  "region": {
+    "name": "Africa",
+    "avgAge": 19.7,
+    "avgDailyIncomeInUSD": 4,
+    "avgDailyIncomePopulation": 0.73
+  },
+  "periodType": "days",
+  "timeToElapse": 38,
+  "reportedCases": 2747,
+  "population": 92931687,
+  "totalHospitalBeds": 678874
+}
+
+estimator(data)
