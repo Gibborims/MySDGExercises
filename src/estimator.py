@@ -54,8 +54,8 @@ def estimator(data):
   output_data["severeImpact"] = severeImpact
 
 
-  print(output_data)
-  # return output_data
+  # print(output_data)
+  return output_data
 
 
 def covid19ImpactEstimator(reported_cases):
@@ -131,18 +131,18 @@ def dollarsInFlight(infections_by_time, avg_daily_income_populase, avg_daily_inc
 #   "totalHospitalBeds": 1380614
 # }
 
-data = {
-  "region": {
-    "name": "Africa",
-    "avgAge": 19.7,
-    "avgDailyIncomeInUSD": 4,
-    "avgDailyIncomePopulation": 0.73
-  },
-  "periodType": "days",
-  "timeToElapse": 38,
-  "reportedCases": 2747,
-  "population": 92931687,
-  "totalHospitalBeds": 678874
-}
+# data = {
+#   "region": {
+#     "name": "Africa",
+#     "avgAge": 19.7,
+#     "avgDailyIncomeInUSD": 4,
+#     "avgDailyIncomePopulation": 0.73
+#   },
+#   "periodType": "days",
+#   "timeToElapse": 38,
+#   "reportedCases": 2747,
+#   "population": 92931687,
+#   "totalHospitalBeds": 678874
+# }
 
-estimator(data)
+# estimator(data)
