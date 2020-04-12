@@ -1,4 +1,5 @@
 import math
+
 def estimator(data):
   output_data = {}
   impact = {}
