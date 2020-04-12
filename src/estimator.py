@@ -15,6 +15,7 @@ def estimator(data):
   avg_daily_income = data["region"]["avgDailyIncomeInUSD"]
   avg_daily_income_populase = data["region"]["avgDailyIncomePopulation"]
 
+
   infections_time = infectionsByRequestedTime(currently_infected, period_type, duration)
   severe_infections_time = infectionsByRequestedTime(severe_currently_infected, period_type, duration)
 
@@ -55,7 +56,7 @@ def estimator(data):
   output_data["severeImpact"] = severeImpact
 
 
-  # print(output_data)
+  ## print(output_data)
   return output_data
 
 
