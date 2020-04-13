@@ -56,7 +56,7 @@ def estimator(data):
   output_data["severeImpact"] = severeImpact
 
 
-  ########### print(output_data)
+  ############ print(output_data)
   return output_data
 
 
